@@ -1,17 +1,15 @@
-$(function () {
+$(() => {
   // Variables
   let socket = io('http://localhost:3000')
 
   function renderMessage(message) {
-    $('.messageList').append("<li class='messageItem itemSecondary'><strong class='username'>" + message.username + ': </strong>' + message.message + ' <time>' + getCurrentDate() + '</time></li>')
+    var messageItem = "<li class='messageItem itemSecondary'><strong class='username'>" + message.username + ': </strong>' + message.message + ' <time>' + getCurrentDate() + '</time></li>'
+    $('.messageList').append(messageItem)
   }
 
   function addNewUser(data) {
-    $('.messageList').append("<li class='info'>" + data.username + ' joined the conversation.')
-  }
-
-  function updateNumUsers(connections) {
-    $('.usersOnline').append(connections.length)
+    var userItem = "<li class='info'>" + data.username + ' joined the conversation.'
+    $('.messageList').append(userItem)
   }
   
   function getCurrentDate() {
@@ -76,9 +74,5 @@ $(function () {
 
   socket.on('userJoined', data => {
     addNewUser(data)
-  })
-
-  socket.on('numUsers', users => {
-    updateNumUsers(users)
   })
 })
